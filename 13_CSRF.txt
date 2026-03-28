@@ -1,0 +1,99 @@
+CSRF (Cross-Site Request Forgery) is a web security vulnerability that tricks an authenticated user into performing unintended actions on a web application without their consent.
+The attacker abuses the victim’s active session to send unauthorized requests.
+
+
+
+                                                                              Common CSRF Impact Scenarios
+
+An attacker can force the victim to:
+🔄 Change username
+🔐 Change password
+📧 Update email address
+💸 Transfer funds
+💳 Modify payment methods
+⚙️ Change account settings
+
+
+
+                                                                       Practical CSRF Exploitation (Using Burp Suite)
+
+1.Login to the application using attacker account
+2.Perform a state-changing action (e.g., password change)
+
+3.Intercept the request using Burp Suite Proxy
+Right-click the request → Engagement tools → Generate CSRF PoC
+
+In options:
+✅ Tick Include auto-submit script
+Click Generate
+Copy the generated HTML code
+
+
+ 4.Exploit Delivery
+
+On attacker system:
+Create a file named csrf.html using Notepad
+Paste the copied HTML PoC
+Share the file with the victim
+
+5.When the victim opens csrf.html in the browser while logged in
+👉 Boom! The action executes automatically
+
+
+
+Tool :
+pip install xsrfprobe
+python3 setup.py install
+xsrfprobe -u http://testphp.vulnweb.com/artists.php?artist=1
+
+
+
+                                                                                         
+ 
+                                                                                           CVSS Score
+
+
+CVSS v3.x: 6.5 – 8.0
+Severity: P1
+
+
+
+
+                                                                                              Impact
+
+Unauthorized account modifications
+Account takeover
+Financial fraud
+Loss of user trust
+Compliance violations
+
+                                                                               
+                                                                                             Remediation
+
+✅ 1. CSRF Tokens (Most Important)
+Use unique, unpredictable CSRF tokens
+Validate token on server side
+
+✅ 2. SameSite Cookies
+Set-Cookie: sessionid=xyz; SameSite=Strict
+
+✅ 3. Re-authentication for Sensitive Actions
+
+Ask password again for:Password change
+                       Payment updates
+                       Fund transfers
+
+✅ 4. Validate HTTP Methods
+Use POST/PUT/DELETE
+Reject state changes via GET
+
+✅ 5. Check Origin / Referer Headers
+Validate trusted origins
+
+
+NOTE: CSRF on 2FA Disabling - Report
+
+
+
+
+

